@@ -58,3 +58,96 @@ def one_column_load(file_path,column):
             return empty_cells 
 
 
+def min(lst):
+    """Returns the minimum value of a list."""
+    min=max(lst)
+    for i in lst:
+        try:
+            if float(i) < min:
+                min = float(i)
+        except ValueError:
+            continue
+        return min
+    
+def max(lst):
+    """Returns the maximum value of a list."""
+    max=0
+    for i in lst:
+        try:
+            if float(i) > max:
+                max = float(i)
+        except ValueError:
+            continue
+        return max
+    
+def average(lst):
+    """Returns the average value of a list."""
+    n=len(lst)
+    sum = 0
+    for i in lst:
+        try:
+            sum = sum + float(i)
+        except ValueError:
+            continue
+    avg = sum/n
+    return avg
+
+
+
+def replace_avg(lst):
+    """Replaces an empty cell with average value of the list and returns the replaced list."""
+    c=average(lst)
+    d=empty(lst)
+    for i in d:
+        lst[i]=c
+    return lst
+
+
+def replace_min(lst):
+    """Replaces an empty cell with minimum value of the list and returns the replaced list."""
+    c=min(lst)
+    d=empty(lst)
+    for i in d:
+        lst[i]=c
+    return lst
+
+
+def replace_max(lst):
+    """Replaces an empty cell with maximum value of the list and returns the replaced list."""
+    c=max(lst)
+    d=empty(lst)
+    for i in d:
+        lst[i]=c
+    return lst
+
+
+def sort_ascending(lst):
+    """Sorts the values of a list in ascending order."""
+    for i in range(0,len(lst)):
+        j=i
+        while j>0 and float(lst[j-1]) > float(lst[j]):
+            lst[j-1],lst[j] = lst[j],lst[j-1]
+            j-=1
+    return lst
+
+
+def sort_descending(lst):
+    """Sorts the values of a list in descending order."""
+    for i in range(0,len(lst)):
+        j=i
+        while j>0 and float(lst[j-1]) < float(lst[j]):
+            lst[j-1],lst[j] = lst[j],lst[j-1]
+            j-=1
+    return lst
+
+def visualizeData(lst):
+    """It gives a visual/graphical representation for a given list."""
+    for i in lst:
+        if int(i)<100:
+            value= int(i)//5+1
+        elif int(i)>=100:
+            value=20
+        strg="*"*value
+        
+        print(strg)
+
