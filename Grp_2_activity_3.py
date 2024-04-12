@@ -57,6 +57,24 @@ def one_column_load(file_path,column):
                 row+=1
             return empty_cells 
 
+def checking(path,column):
+    with open(path,'r') as file:
+        csv_r = csv.reader(file)
+        next(csv_r)
+        list = []
+        for data in csv_r:
+            list.append(data[int(column)-1].strip())
+        result = 'Numeric'
+        for value in list:
+            if value != '':
+                try:
+                    int(value)
+                except ValueError:
+                    result = 'Non-numeric'
+            elif value == '':
+                continue    
+        return result
+    
 def number_of_column(file_path):
     """Returns the number of columns that the csv file has."""
     with open(file_path,'r') as file:
@@ -136,32 +154,32 @@ def average(lst):
 
 def replace_avg(lst):
     """Replaces an empty cell with average value of the list and returns the replaced list."""
-    c=average(lst)
-    d=empty(lst)
-    for i in d:
-        lst[i]=c
+    avg=average(lst)
+    empty_indices=empty(lst)
+    for i in empty_indices:
+        lst[i]=avg
     return lst
 
 
 def replace_min(lst):
     """Replaces an empty cell with minimum value of the list and returns the replaced list."""
-    c=min(lst)
-    d=empty(lst)
-    for i in d:
-        lst[i]=c
+    minimum=min(lst)
+    empty_indices=empty(lst)
+    for i in empty_indices:
+        lst[i]=minimum
     return lst
 
 
 def replace_max(lst):
     """Replaces an empty cell with maximum value of the list and returns the replaced list."""
-    c=max(lst)
-    d=empty(lst)
-    for i in d:
-        lst[i]=c
+    maximum_value=max(lst)
+    empty_indices=empty(lst)
+    for i in empty_indices:
+        lst[i]=maximum_value
     return lst
 
 
-def sort_ascending(lst):
+def insertion_sort_ascending(lst):
     """Sorts the values of a list in ascending order."""
     for i in range(0,len(lst)):
         j=i
@@ -171,7 +189,7 @@ def sort_ascending(lst):
     return lst
 
 
-def sort_descending(lst):
+def insertion_sort_descending(lst):
     """Sorts the values of a list in descending order."""
     for i in range(0,len(lst)):
         j=i
@@ -205,39 +223,39 @@ Program stages:
         print('Stage 1: Load Data ')
         while True:
             try:
-                file = input("Enter your file path: ")
+                file = input("Enter your csv file path: ")
                 number_of_columns=number_of_column(file)
                 name = name_of_column(file)
-                input('Loading... Press enter')
+                print('File Loading...')
                 load_data(file,1,number_of_columns)
                 input('Your file is loaded successfully. Press Enter to continue ')
                 print('Your file contains',number_of_columns,'columns named as: ')
 
-                column_chices='' # gives choices of names of columns as separated by /
+                column_choices='' # gives choices of names of columns as separated by /
                 for i in name:
-                    column_chices+=i+'/'
+                    column_choices+=i+'/'
                 while True:    
                     n=1
                     for i in range(number_of_columns):
                         print(str(n)+'.',name[i].strip())
                         n+=1
 
-                    column=input('Which column do you want to analyse? \nChoose '+column_chices+' ').capitalize()
+                    column=input('Which column do you want to analyse? \nChoose '+column_choices+' ').capitalize()
                     
                     column_number = 0  # changing the name of column given by the user to number to know which column number is the given name.
                     for i in name:
                         column_number+=1
                         if column == i.strip():
                             break
-
-                    if column== 'Price' or column== 'Units sold':
-                        print('Here is your chosen colomn. ')
+                    check = checking(file,column_number)
+                    if check == 'Numeric':
+                        print('Here is your chosen column. ')
                         empty_rows = one_column_load(file,column_number)
                         lst=return_list(file,column_number)
                         print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
                         input('Press Enter to go to the next stage. ')
                         print('Stage 2: Cleaning and Preparing Data')
-                        print('\nHere is the list\n',lst,'\n')
+                        print('\nHere the data of your chosen column\n',lst,'\n')
                         if empty_rows!=[]:
                             print('You have empty cell at: ')
                             for i in empty_rows:
@@ -286,9 +304,9 @@ Program stages:
         2. Decending order
         Choose 1/2 """)
                                 if sort_choice == '1':
-                                    sorted=sort_ascending(lst2)
+                                    sorted=insertion_sort_ascending(lst2)
                                 elif sort_choice == '2':
-                                    sorted=sort_descending(lst2)
+                                    sorted=insertion_sort_descending(lst2)
                                 else:
                                     print('Input Error. Try again.')
                                     continue
@@ -301,17 +319,17 @@ Program stages:
                             visualizeData(sorted)
                             print('Visualization Completed.')
                             print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
-                        elif column == 'Branch' or column=='Product':
+                    elif check == 'Non-numeric':
                             print('You have chosen a non-numeric column. Try again !')
                             continue
-                        else:
+                    else:
                             print('Input Error. Try again!')
                             continue
-                        repeat = input('Do you want to conntinue analyzing the other numerical columns? yes/no').lower()
-                        if repeat=='yes':
-                            continue
-                        elif repeat == 'no':
-                            break
+                    repeat = input('Do you want to conntinue analyzing the other numerical columns? yes/no ').lower()
+                    if repeat=='yes':
+                        continue
+                    elif repeat == 'no':
+                        break
                     break
                 restart=input('Press 1 to go back to the first stage or 0 to exit. ')
                 if restart == '1':
