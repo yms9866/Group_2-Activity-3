@@ -1,3 +1,26 @@
+"""
+GROUP 2
+Authors:
+
+        1. 
+
+
+        2.Dona Pal:
+            Contributed in the functions: min(), max(), average(), replace_avg(), replace_max(), replace_min(), 
+            visualizeData(), sort_ascending(), sort_descending()
+
+        
+GIT Repository: https://github.com/yms9866/Group_2-Activity-3.git
+
+Manifesto :This Program is written to facilitate a Command Line Interface Tool for Data Analysis.
+        The program guides the user with a step-by-step instruction, from choosing desired CSV file for loading 
+        the data into the program, to preparing the data, analyzing the data to the final visualization of the 
+        processed data. 
+
+
+"""
+
+
 import csv
 
 def longest_word(file_path):
@@ -220,7 +243,8 @@ Program stages:
 4. Visualize Data"""
 ) 
         print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
-        print('Stage 1: Load Data ')
+        print('STAGE 1: LOAD DATA ')
+        print()
         while True:
             try:
                 file = input("Enter your csv file path: ")
@@ -228,7 +252,7 @@ Program stages:
                 name = name_of_column(file)
                 print('File Loading...')
                 load_data(file,1,number_of_columns)
-                input('Your file is loaded successfully. Press Enter to continue ')
+                input('Your file is loaded successfully. Press ENTER to continue ')
                 print('Your file contains',number_of_columns,'columns named as: ')
 
                 column_choices='' # gives choices of names of columns as separated by /
@@ -240,7 +264,7 @@ Program stages:
                         print(str(n)+'.',name[i].strip())
                         n+=1
 
-                    column=input('Which column do you want to analyse? \nChoose '+column_choices+' ').capitalize()
+                    column=input('Which column do you want to analyse? \nChoose '+column_choices+' :').capitalize()
                     
                     column_number = 0  # changing the name of column given by the user to number to know which column number is the given name.
                     for i in name:
@@ -249,12 +273,13 @@ Program stages:
                             break
                     check = checking(file,column_number)
                     if check == 'Numeric':
-                        print('Here is your chosen column. ')
+                        print('Here is your chosen column: ')
                         empty_rows = one_column_load(file,column_number)
                         lst=return_list(file,column_number)
                         print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
-                        input('Press Enter to go to the next stage. ')
-                        print('Stage 2: Cleaning and Preparing Data')
+                        input("Press ENTER to move to the next stage...")
+                        print('STAGE 2: CLEANING AND PREPARING DATA')
+                        print()
                         print('\nHere the data of your chosen column\n',lst,'\n')
                         if empty_rows!=[]:
                             print('You have empty cell at: ')
@@ -268,7 +293,7 @@ Program stages:
         2. Minimum value of the list 
         3. Maximum value of the list
         ************************************************************************
-        Choose 1/2/3  """)
+        Choose [1/2/3]:  """)
                                 else:
                                     replace=input("""What do you want to do about these cells? Do you want to replace them with
         ************************************************************************
@@ -276,7 +301,7 @@ Program stages:
         2. Minimum value of the list 
         3. Maximum value of the list
         ************************************************************************
-        Choose 1/2/3  """)
+        Choose [1/2/3]:  """)
                                 if replace == '1':
                                         avg = average(lst)
                                         print('All empty values replaced with average value which is',avg)
@@ -290,61 +315,65 @@ Program stages:
                                         print('All empty values replaced with minimum value which is',maxi)
                                         lst2=replace_max(lst)
                                 else:
-                                    print('Input Error. Try again. ')
+                                    print('Input Error. Please try again!')
                                     continue
                                 break
                             
                             print('\nHere is the replaced list\n',lst2,'\n')
                             print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
-                            print('Stage3: Analysing Data')
-                            
+                            input("Press ENTER to move to the next stage...")
+                            print('STAGE 3: ANALYSING DATA')
+                            print()
+
                             while True:
                                 sort_choice = input("""Do you want to sort the list in: 
         1. Ascending order
         2. Decending order
-        Choose 1/2 """)
+        Choose [1/2]: """)
                                 if sort_choice == '1':
                                     sorted=insertion_sort_ascending(lst2)
                                 elif sort_choice == '2':
                                     sorted=insertion_sort_descending(lst2)
                                 else:
-                                    print('Input Error. Try again.')
+                                    print('Input Error. Please try again!')
                                     continue
                                 break
                             print('\nHere is your sorted list \n',sorted,'\n')
-                            print('************************************************************************')
-                            print('Stage 4: Visualizing Data')
+                            print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+                            input("Press ENTER to move to the next stage...")
+                            print('STAGE 4: VISUALIZING DATA')
+                            print()
                             print('Column:',column)
                             print('Legend: each * represents 5 units')
                             visualizeData(sorted)
                             print('Visualization Completed.')
                             print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
                     elif check == 'Non-numeric':
-                            print('You have chosen a non-numeric column. Try again !')
+                            print('You have chosen a non-numeric column. Please try again!')
                             continue
                     else:
-                            print('Input Error. Try again!')
+                            print('Input Error. Please try again!')
                             continue
-                    repeat = input('Do you want to conntinue analyzing the other numerical columns? yes/no ').lower()
+                    repeat = input('Do you want to continue analyzing the other numerical columns? [yes/no]: ').lower()
                     if repeat=='yes':
                         continue
                     elif repeat == 'no':
                         break
                     break
-                restart=input('Press 1 to go back to the first stage or 0 to exit. ')
+                restart=input('Press 1 to go back to the first stage or 0 to exit: ')
                 if restart == '1':
                     continue
                 elif restart == '0':
-                    print('The proogram is closed.')
+                    print('The program is closed.')
                     print('Thank you and Goodbye!')
                     break
                 else:
-                    print('Input Error. Try again!')
+                    print('Input Error. Please try again!')
                     continue  
             except FileNotFoundError:
                 print('File does not exist.')
             except Exception:
-                print('Something went wrong. Please try again')
+                print('Something went wrong. Please try again!')
 
 
             
