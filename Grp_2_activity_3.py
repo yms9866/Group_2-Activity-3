@@ -2,8 +2,9 @@
 GROUP 2
 Authors:
 
-        1. 
-
+        1. Yosef Shibele:
+            Contributed in the loading stage functions; longest_word(), load_data(), one_column_load(), 
+            checking_column(), number_of_column(), name_of_column(), empty() and the main function.
 
         2.Dona Pal:
             Contributed in the functions: min(), max(), average(), replace_avg(), replace_max(), replace_min(), 
@@ -80,7 +81,7 @@ def one_column_load(file_path,column):
                 row+=1
             return empty_cells 
 
-def checking(path,column):
+def checking_column(path,column):
     with open(path,'r') as file:
         csv_r = csv.reader(file)
         next(csv_r)
@@ -271,7 +272,7 @@ Program stages:
                         column_number+=1
                         if column == i.strip():
                             break
-                    check = checking(file,column_number)
+                    check = checking_column(file,column_number)
                     if check == 'Numeric':
                         print('Here is your chosen column: ')
                         empty_rows = one_column_load(file,column_number)
@@ -359,6 +360,8 @@ Program stages:
                         continue
                     elif repeat == 'no':
                         break
+                    else:
+                        repeat = input('Do you want to continue analyzing the other numerical columns? [yes/no]: ').lower()
                     break
                 restart=input('Press 1 to go back to the first stage or 0 to exit: ')
                 if restart == '1':
@@ -369,7 +372,7 @@ Program stages:
                     break
                 else:
                     print('Input Error. Please try again!')
-                    continue  
+                    restart=input('Press 1 to go back to the first stage or 0 to exit: ') 
             except FileNotFoundError:
                 print('File does not exist.')
             except Exception:
