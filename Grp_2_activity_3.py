@@ -225,8 +225,10 @@ def insertion_sort_descending(lst):
 def visualizeData(lst):
     """It gives a visual/graphical representation for a given list."""
     for i in lst:
-        if int(i)<100:
+        if int(i)<5:
             value= int(i)//5+1
+        elif int(i)<100:
+            value= int(i)//5
         elif int(i)>=100:
             value=20
         strg="*"*value
